@@ -82,9 +82,9 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
   /** Public (temporary) utility to facilitate useful logging during simulation. */
   override def toString: String =
     s"""
-      |     board  = [${board.size}] $board,
-      |     deck   = [${deck.size}] $deck,
-      |     score  = $score""".stripMargin
+      |- board  = [${board.size}] $board,
+      |- deck   = [${deck.size}] $deck,
+      |- score  = $score""".stripMargin
 
 }
 

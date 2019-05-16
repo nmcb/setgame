@@ -8,7 +8,7 @@ I have encoded the core game logic in the class `Game` using a couple of type al
 - Retrieve the current players' scores.
 - Return who has won a game.
 
-I've treated the exercise as a proof of concept, and coded it without external dependencies, only using Scala the language and the `List`, `Map` and `Either` data structures that are provided by Scala the library.  This was intentional as I wanted to focus on displaying my familiarity with Scala basics, instead of an arbitrary external library of framework.  In the same manner I did not add tests, even though (I hope you agree) these could be added rather easily.  In short, I kept things small on purpose.
+I've treated the exercise as a proof of concept, and coded it without external dependencies, only using Scala the language and the `List`, `Map` and `Either` data structures that are provided by Scala the library.  This was intentional as I wanted to focus on displaying my familiarity with Scala basics, instead of an arbitrary external library or framework.  In the same manner I did not add tests, even though (I hope you agree) these could be added rather easily.  In short, I kept things small on purpose.
 
 The overall design treats an instance of the case class `Game` as a step in the game, containing at value level the current `board` of cards on the table, the current `deck` of cards yet unseen by the players, a `score` mapping that maintains the number of card set moves any player has removed from the board up till now, and a `caller` reference that is used to hold the player that called upon a certain board.  Instances of a new `Game` can be created for multiple players via the `mkGame` and `mkEasyGame` methods on `Game`s companion object.
 

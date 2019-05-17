@@ -40,12 +40,16 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
 
   // utilities
 
-  /** Utility returning a transition to given next game, or the final score if next holds no possible moves. */
-  private def transition[T <: GameState](next: Game[T]): Transition[T] =
-    if (possibleMoves(next.board).nonEmpty || next.deck.nonEmpty)
-      Right(next)
+  /** Utility returning a transition to given game and state or to `Finished` if game holds no possible moves. */
+  private def transition[T <: GameState](game: Game[T]): Transition[T] =
+    if (possibleMoves(game.board).nonEmpty || game.deck.nonEmpty)
+      Right(game)
     else
-      Left(next.score)
+      Left(game.finished)
+
+  /** Utility returning this game in `Finished` state */
+  private def finished: Game[GameState.Finished] =
+    Game(board, deck, score, caller)
 
   /** Utility returning the score updated for given player and addition. */
   private def updatedScore(player: Player, addition: Int): Score =
@@ -92,8 +96,8 @@ object Game {
 
   import scala.util.Random
 
-  val BoardSize = 12
   val MoveSize  = 3
+  val BoardSize = 4 * MoveSize
 
   /** Creates a `Running` game with shuffled deck for given players. */
   def mkGame(players: Player*): Game[GameState.Running] =

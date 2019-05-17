@@ -29,7 +29,15 @@ package object setgame {
   object GameState {
     sealed trait Running  extends GameState
     sealed trait Called   extends GameState
+    sealed trait Finished extends GameState
   }
+
+  /** Models a game transition result that is either:
+    *
+    * - a `Right` game in `Running` or `Called` state that can continue to be played,
+    * - or a `Left` game that's `Finished`.
+    **/
+  type Transition[S <: GameState] = Either[Game[GameState.Finished], Game[S]]
 
   /** Names for structures. */
   type Player                     = String                    // Name
@@ -37,6 +45,5 @@ package object setgame {
   type Move                       = List[Card]                // Game.MoveSize
   type Board                      = List[Card]                // Game.BoardSize
   type Deck                       = List[Card]                // Derived size
-  type Transition[S <: GameState] = Either[Score, Game[S]]    // Right game in right state, or left final score
 
 }

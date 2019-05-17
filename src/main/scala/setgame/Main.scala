@@ -14,7 +14,7 @@ object Main extends App {
     * - whom will use `game.hint` as the next move to remove from the board,
     * - unless no move is possible, which will simulate the trigger to enlarge the board size.
     * */
-  def play[S <: GameState.Running](game: Game[S], round: Int = 0): Score = {
+  def play[S <: GameState.Running](game: Game[S], round: Int = 0): Unit = {
 
     import scala.util.Random
 
@@ -28,10 +28,9 @@ object Main extends App {
         called.remove(move) match {
           case Right(next) =>
             play(next, round + 1)
-          case Left(score) =>
-            println(s"*** FINAL BOARD: ${called.board.filterNot(move.contains)}")
-            println(s"*** FINAL SCORE: $score")
-            score
+          case Left(finished) =>
+            println(s"*** FINAL BOARD: ${finished.board}")
+            println(s"*** FINAL SCORE: ${finished.score}")
         }
       case None =>
         println(s"($round) ENLARGED\n")

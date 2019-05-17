@@ -1,6 +1,6 @@
 package setgame
 
-/** Models the game state at value level, as well as type-level to assert allowed transitions at compile time. */
+/** Models the game state at value-level, as well as type-level to assert allowed transitions at compile time. */
 case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: Player = null) {
 
   import Game._

@@ -14,7 +14,7 @@ object Main extends App {
     * - whom will use `game.hint` as the next move to remove from the board,
     * - unless no move is possible, which will simulate the trigger to enlarge the board size.
     * */
-  def play[S <: GameState.Running](game: Game[S], round: Int = 0): Unit = {
+  def play[S <: GameState.Dealt](game: Game[S], round: Int = 0): Unit = {
 
     import scala.util.Random
 

@@ -28,16 +28,17 @@ package object setgame {
   sealed trait GameState
   object GameState {
     sealed trait Running  extends GameState
-    sealed trait Called   extends GameState
+    sealed trait Dealt    extends Running
+    sealed trait Called   extends Running
     sealed trait Finished extends GameState
   }
 
   /** Models a game transition result that is either:
     *
-    * - a `Right` game in `Running` or `Called` state that can continue to be played,
+    * - a `Right` game in `Running`, i.e. `Dealt` or `Called`, state that can continue to be played,
     * - or a `Left` game that's `Finished`.
     **/
-  type Transition[S <: GameState] = Either[Game[GameState.Finished], Game[S]]
+  type Transition[S <: GameState.Running] = Either[Game[GameState.Finished], Game[S]]
 
   /** Names for structures. */
   type Player                     = String                    // Name

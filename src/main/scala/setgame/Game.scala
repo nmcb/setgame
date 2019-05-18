@@ -7,12 +7,12 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
 
   // state transitions
 
-  /** Transitions the game to `Called` when a player calls on a `Running` game. */
-  def call[T >: S <: GameState.Running](player: Player): Transition[GameState.Called] =
+  /** Transitions the game to `Called` when a player calls on a `Dealt` game. */
+  def call[T >: S <: GameState.Dealt](player: Player): Transition[GameState.Called] =
     transition(Game(board, deck, score, player))
 
-  /** Transition the game to `Running` with the game's board, deck and score updated for given `Called` for move. */
-  def remove[T >: S <: GameState.Called](move: Move): Transition[GameState.Running] =
+  /** Transition the game to `Dealt` with the game's board, deck and score updated for given `Called` for move. */
+  def remove[T >: S <: GameState.Called](move: Move): Transition[GameState.Dealt] =
     isValid(move) && isSet(move) match {
       case true if board.size <= BoardSize =>
         transition(Game(
@@ -31,8 +31,8 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
           updatedScore(caller, -1)))
     }
 
-  /** Transitions the game to `Running` after the game's board has been enlarged. */
-  def enlarge[T >: S <: GameState.Running]: Transition[GameState.Running] =
+  /** Transitions the game from `Dealt` to `Dealt` after the game's board has been enlarged. */
+  def enlarge[T >: S <: GameState.Dealt]: Transition[GameState.Dealt] =
     transition(Game(
       board ++ deck.take(MoveSize),
       deck.drop(MoveSize),
@@ -40,8 +40,8 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
 
   // utilities
 
-  /** Utility returning a transition to given game and state or to `Finished` if game holds no possible moves. */
-  private def transition[T <: GameState](game: Game[T]): Transition[T] =
+  /** Utility returning a transition to given right game and `Running `state or left when `Finished`. */
+  private def transition[T <: GameState.Running](game: Game[T]): Transition[T] =
     if (possibleMoves(game.board).nonEmpty || game.deck.nonEmpty)
       Right(game)
     else
@@ -99,16 +99,16 @@ object Game {
   val MoveSize  = 3
   val BoardSize = 4 * MoveSize
 
-  /** Creates a `Running` game with shuffled deck for given players. */
-  def mkGame(players: Player*): Game[GameState.Running] =
+  /** Creates a `Dealt` game with shuffled deck for given players. */
+  def mkGame(players: Player*): Game[GameState.Dealt] =
     make(deck, players.toList)
 
-  /** Creates an easy (solid figures only) `Running` game with shuffled deck for given players. */
-  def mkEasyGame(players: Player*): Game[GameState.Running] =
+  /** Creates an easy (solid figures only) `Dealt` game with shuffled deck for given players. */
+  def mkEasyGame(players: Player*): Game[GameState.Dealt] =
     make(deck.filter(_.shade == Solid), players.toList)
 
-  /** Shuffles given deck and returns a `Running` game from it for given players. */
-  private def make(deck: Deck, players: List[Player]): Game[GameState.Running] = {
+  /** Shuffles given deck and returns a `Dealt` game from it for given players. */
+  private def make(deck: Deck, players: List[Player]): Game[GameState.Dealt] = {
     val shuffled = Random.shuffle(deck)
     Game(shuffled.take(BoardSize), shuffled.drop(BoardSize), players.map(p => p -> 0).toMap)
   }

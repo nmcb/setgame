@@ -8,11 +8,11 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
   // state transitions
 
   /** Transitions the game to `Called` when a player calls on a `Dealt` game. */
-  def call[T >: S <: GameState.Dealt](player: Player): Transition[GameState.Called] =
+  def call[S <: GameState.Dealt](player: Player): Transition[GameState.Called] =
     transition(Game(board, deck, score, player))
 
   /** Transition the game to `Dealt` with the game's board, deck and score updated for given `Called` for move. */
-  def remove[T >: S <: GameState.Called](move: Move): Transition[GameState.Dealt] =
+  def remove[S <: GameState.Called](move: Move): Transition[GameState.Dealt] =
     isValid(move) && isSet(move) match {
       case true if board.size <= BoardSize =>
         transition(Game(
@@ -31,8 +31,8 @@ case class Game[S <: GameState](board: Board, deck: Deck, score: Score, caller: 
           updatedScore(caller, -1)))
     }
 
-  /** Transitions the game from `Dealt` to `Dealt` after the game's board has been enlarged. */
-  def enlarge[T >: S <: GameState.Dealt]: Transition[GameState.Dealt] =
+  /** Transitions the game from `Dealt` to `Dealt` with the game's board has been enlarged. */
+  def enlarge[S <: GameState.Dealt]: Transition[GameState.Dealt] =
     transition(Game(
       board ++ deck.take(MoveSize),
       deck.drop(MoveSize),

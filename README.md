@@ -1,12 +1,8 @@
 ## Set-Game
 
-Dear Chris, Kelvin, and colleagues, thank you for the your invitation to continue the application process, I hope this codebase provides an interesting read and answer to the exercise.  The Set-game provided many possibilities to focus on when encoded in Scala.  Please allow me to elaborate a little bit on the form I choose as a rationale.
+I hope this codebase provides an interesting read and answer to the exercise.  The Set-game provided many possibilities to focus on when encoded in Scala.  Please allow me to elaborate a little bit on the form I choose as a rationale.
 
-I have encoded the core game logic in the class `Game` using a couple of type alias definitions in the package object `setgame`.  A program that simulates a randomly generated Set-Game for three players is encoded in the class `Main` which includes a display of the required functionality:
-
-- Run a single player move.
-- Retrieve the current players' scores.
-- Return who has won a game.
+I have encoded the core game logic in the class `Game` using a couple of type alias definitions in the package object `setgame`.  A program that simulates a randomly generated Set-Game for three players is encoded in the class `Main` which includes a display of the required functionality.
 
 I've treated the exercise as a proof of concept, and coded it without external dependencies, only using Scala the language and the `List`, `Map` and `Either` data structures that are provided by Scala the library.  This was intentional as I wanted to focus on displaying my familiarity with Scala basics, instead of an arbitrary external library or framework.  In the same manner I did not add tests, even though (I hope you agree) these could be added rather easily.  In short, I kept things small on purpose.
 

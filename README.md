@@ -1,6 +1,6 @@
 ## Set-Game
 
-I hope this codebase provides an interesting read and answer to the exercise.  The Set-game provided many possibilities to focus on when encoded in Scala.  Please allow me to elaborate a little bit on the form I choose as a rationale.
+I hope this codebase provides an interesting read and answer to the [Set-Game exercise](https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf).  The Set-game provided many possibilities to focus on when encoded in Scala.  Please allow me to elaborate a little bit on the form I choose as a rationale.
 
 I have encoded the core game logic in the class `Game` using a couple of type alias definitions in the package object `setgame`.  A program that simulates a randomly generated Set-Game for three players is encoded in the class `Main` which includes a display of the required functionality.
 
